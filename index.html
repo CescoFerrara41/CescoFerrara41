@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Francesco Ferrara</title>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Enable class-based dark mode -->
+  <script>
+    tailwind.config = {
+      darkMode: 'class'
+    }
+  </script>
+</head>
+
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors">
+
+  <!-- Header -->
+  <header class="bg-gray-900 dark:bg-black text-white p-6 flex justify-between items-center">
+    <div>
+      <h1 class="text-2xl font-bold">Francesco Ferrara</h1>
+      <p class="text-gray-400">Software Engineer | Computer Science</p>
+    </div>
+
+    <!-- Dark Mode Toggle -->
+    <div class="flex items-center gap-3">
+      <span class="text-yellow-400 text-xl">☀️</span>
+
+      <button
+        id="themeToggle"
+        class="relative w-14 h-7 bg-gray-300 dark:bg-gray-700 rounded-full transition shadow-inner"
+        aria-label="Toggle Dark Mode"
+      >
+        <span
+          id="toggleDot"
+          class="absolute top-1 left-1 w-5 h-5 bg-white rounded-full transition-transform"
+        ></span>
+      </button>
+
+      <span class="text-gray-300 text-xl">🌙</span>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="max-w-3xl mx-auto px-6 py-16 space-y-16">
+
+    <!-- About Me -->
+    <section>
+      <h2 class="text-3xl font-bold mb-4">About Me</h2>
+      <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+        I’m a computer science professional with a strong foundation in software
+        engineering and hands-on experience building full-stack applications,
+        data-driven tools, and game systems. I enjoy working across the stack,
+        learning new technologies, and turning ideas into polished, usable
+        products.
+      </p>
+    </section>
+
+    <!-- Contact / Interest Form -->
+    <section class="bg-white dark:bg-gray-800 rounded-xl shadow p-8">
+      <h2 class="text-2xl font-semibold mb-6">
+        Let me know you were here!
+      </h2>
+
+      <form id="contactForm" class="space-y-6">
+
+        <!-- Honeypot (spam protection) -->
+        <input
+          type="text"
+          id="website"
+          name="website"
+          tabindex="-1"
+          autocomplete="off"
+          class="hidden"
+        />
+
+        <!-- Company -->
+        <div>
+          <label class="block mb-1 font-medium">
+            Company Name <span class="text-red-500">*</span>
+          </label>
+          <input
+            id="company"
+            type="text"
+            required
+            placeholder="Acme Corp"
+            class="w-full px-4 py-2 rounded-md border
+                   bg-gray-50 dark:bg-gray-700
+                   border-gray-300 dark:border-gray-600
+                   focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+
+        <!-- Email -->
+        <div>
+          <label class="block mb-1 font-medium">
+            Email (optional)
+          </label>
+          <input
+            id="email"
+            type="email"
+            placeholder="you@company.com"
+            class="w-full px-4 py-2 rounded-md border
+                   bg-gray-50 dark:bg-gray-700
+                   border-gray-300 dark:border-gray-600
+                   focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+
+        <!-- Submit -->
+        <button
+          id="submitBtn"
+          type="submit"
+          class="w-full bg-blue-600 hover:bg-blue-700
+                 text-white font-semibold py-3 rounded-md
+                 transition disabled:bg-gray-400
+                 disabled:cursor-not-allowed"
+        >
+          Submit
+        </button>
+
+        
+      </form>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="text-center py-4 text-gray-500 dark:text-gray-400">
+    © 2025 Francesco Ferrara
+  </footer>
+
+  <!-- Dark Mode Script -->
+  <script>
+    const toggle = document.getElementById("themeToggle");
+    const dot = document.getElementById("toggleDot");
+    const html = document.documentElement;
+
+    if (localStorage.theme === "dark") {
+      html.classList.add("dark");
+      dot.classList.add("translate-x-7");
+    }
+
+    toggle.addEventListener("click", () => {
+      const isDark = html.classList.toggle("dark");
+      dot.classList.toggle("translate-x-7", isDark);
+      localStorage.theme = isDark ? "dark" : "light";
+    });
+  </script>
+
+  <!-- Form + Spam Protection Script -->
+  <script>
+    const form = document.getElementById("contactForm");
+    const submitBtn = document.getElementById("submitBtn");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      // Honeypot spam check
+      if (document.getElementById("website").value) return;
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Submitting...";
+
+      const company = document.getElementById("company").value;
+      const email = document.getElementById("email").value;
+
+      try {
+        await fetch(
+          "https://script.google.com/macros/s/AKfycbxBq7P9RcynDkfr-L1ohQP_zBE1FuljC2gm186nFAe1FB2zakKZqP2zhrLNWk-2o-hU/exec",
+          {
+            method: "POST",
+            mode: "no-cors",
+            body: JSON.stringify({ company, email })
+          }
+        );
+
+        alert("Thanks! Your info has been submitted.");
+        form.reset();
+      } catch (err) {
+        alert("Network error. Please try again later.");
+        console.error(err);
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Submit";
+      }
+    });
+  </script>
+
+</body>
+</html>
