@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BetBlitz | Francesco Ferrara</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Project-specific styles */
+    .project-page {
+      min-height: 100vh;
+    }
+
+    .project-header {
+      background: var(--bg-header);
+      border-bottom: 1px solid var(--border-color);
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+
+    .project-header nav {
+      display: flex;
+      align-items: center;
+      padding: 1rem 0;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+      color: var(--text-secondary);
+      font-weight: 500;
+      transition: all 0.3s ease;
+      padding: 0.5rem 1rem;
+      border-radius: var(--radius-sm);
+    }
+
+    .back-link:hover {
+      color: var(--text-primary);
+      background: var(--bg-card);
+    }
+
+    .back-arrow {
+      font-size: 1.1rem;
+      transition: transform 0.3s ease;
+    }
+
+    .back-link:hover .back-arrow {
+      transform: translateX(-3px);
+    }
+    
+    .project-main {
+      padding-top: 7rem;
+      padding-bottom: 4rem;
+      animation: fadeInUp 0.6s ease-out;
+    }
+
+    .project-title {
+      font-size: clamp(2rem, 5vw, 2.75rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-primary) 40%, var(--accent-primary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .project-description {
+      font-size: 1.15rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+
+    .view-project-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.9rem 2rem;
+      background: var(--accent-primary);
+      color: var(--bg-primary);
+      border: none;
+      border-radius: var(--radius-md);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      margin-bottom: 3rem;
+    }
+
+    .view-project-btn:hover {
+      background: #3b82f6;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(96, 165, 250, 0.3);
+    }
+
+    .view-project-btn svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .project-section {
+      margin-bottom: 3rem;
+    }
+
+    .project-section h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--text-primary);
+    }
+
+    .project-section p {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 1rem;
+    }
+
+    .project-section ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .project-section ul li {
+      position: relative;
+      padding-left: 1.5rem;
+      margin-bottom: 0.75rem;
+      font-size: 1rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .project-section ul li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.7rem;
+      width: 6px;
+      height: 6px;
+      background: var(--accent-primary);
+      border-radius: 50%;
+    }
+
+    .tech-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .tech-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .tech-card:hover {
+      border-color: var(--accent-primary);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .tech-card h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--accent-primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .tech-card p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 799px) {
+      .project-main {
+        padding-top: 5rem;
+        padding-bottom: 2rem;
+      }
+
+      .project-title {
+        font-size: 1.75rem;
+      }
+
+      .project-description {
+        font-size: 1rem;
+      }
+
+      .tech-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body class="project-page">
+
+  <!-- Fixed background with grid overlay -->
+  <div class="page-background"></div>
+  <div class="grid-overlay"></div>
+
+  <!-- Header -->
+  <header class="project-header">
+    <nav class="container">
+      <a href="/" class="back-link">
+        <span class="back-arrow">←</span>
+        <span>Francesco Ferrara</span>
+      </a>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <main class="project-main">
+    <div class="container" style="max-width: 800px;">
+      
+      <!-- Title & Description -->
+      <header style="margin-bottom: 2rem;">
+        <h1 class="project-title">BetBlitz</h1>
+        <p class="project-description">
+          A fantasy sports platform where users compete in leagues with friends using real gambling odds to make fake money bets. Experience the thrill of sports betting with zero financial risk in a competitive, social environment.
+        </p>
+        <a href="https://team-bet-blitz.vercel.app" target="_blank" rel="noopener noreferrer" class="view-project-btn">
+          <span>View Live Project</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+            <polyline points="15 3 21 3 21 9"/>
+            <line x1="10" y1="14" x2="21" y2="3"/>
+          </svg>
+        </a>
+      </header>
+
+      <!-- Images Section -->
+      <section class="project-section">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+          <img src="betblitzhome.png" alt="BetBlitz App Screenshot 1" style="width: 100%; border-radius: var(--radius-md); border: 1px solid var(--border-color); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);">
+          <img src="betblitzbet.png" alt="BetBlitz App Screenshot 2" style="width: 100%; border-radius: var(--radius-md); border: 1px solid var(--border-color); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);">
+        </div>
+      </section>
+
+      <!-- Overview -->
+      <section class="project-section">
+        <h2>Overview</h2>
+        <p>
+          BetBlitz is a fake sports gambling website designed to replicate the fantasy football experience with real-time betting. Users can create or join leagues with friends and compete to see who can make the most fake money through strategic bets. The platform integrates real gambling odds to provide an authentic betting experience while maintaining a risk-free, social environment perfect for friendly competition.
+        </p>
+      </section>
+
+      <!-- Key Features -->
+      <section class="project-section">
+        <h2>Key Features</h2>
+        <ul>
+          <li>League management system allowing users to create and join competitive leagues</li>
+          <li>Real-time betting interface with actual gambling odds</li>
+          <li>Fake currency system for tracking winnings and losses</li>
+          <li>Friend-based competition and leaderboards within leagues</li>
+          <li>User authentication and secure account management</li>
+          <li>Responsive design optimized for desktop and mobile viewing</li>
+          <li>Live odds updates and bet tracking</li>
+        </ul>
+      </section>
+
+      <!-- Tech Stack -->
+      <section class="project-section">
+        <h2>Tech Stack</h2>
+        <div class="tech-grid">
+          <div class="tech-card">
+            <h3>Frontend</h3>
+            <p>Tailwind CSS for styling</p>
+          </div>
+          <div class="tech-card">
+            <h3>Backend</h3>
+            <p>Supabase for database & APIs</p>
+          </div>
+          <div class="tech-card">
+            <h3>Authentication</h3>
+            <p>Supabase Auth system</p>
+          </div>
+          <div class="tech-card">
+            <h3>Odds Integration</h3>
+            <p>Real gambling odds API</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Functionality -->
+      <section class="project-section">
+        <h2>Functionality</h2>
+        <ul>
+          <li>User registration and authentication with email verification</li>
+          <li>Create custom leagues with friends and set betting parameters</li>
+          <li>Browse upcoming games with real gambling odds</li>
+          <li>Place bets on sports events using virtual currency</li>
+          <li>Track performance against friends on league leaderboards</li>
+          <li>Automatic bet settlement with real-time odds updates</li>
+          <li>Social features including league chat and messaging</li>
+        </ul>
+      </section>
+
+      <!-- Technical Highlights -->
+      <section class="project-section">
+        <h2>Technical Highlights</h2>
+        <ul>
+          <li>Secure user authentication and account management with Supabase</li>
+          <li>Real-time database synchronization for live odds and bet updates</li>
+          <li>Responsive UI built entirely with Tailwind CSS</li>
+          <li>Integration with external sports odds APIs for accuracy</li>
+          <li>Scalable backend architecture for supporting multiple concurrent leagues</li>
+          <li>Clean separation of concerns between frontend and backend</li>
+          <li>Efficient data queries and caching strategies</li>
+        </ul>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <p>© 2025 Francesco Ferrara</p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
